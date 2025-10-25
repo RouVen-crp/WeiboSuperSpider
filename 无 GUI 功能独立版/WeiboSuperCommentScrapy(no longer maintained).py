@@ -23,8 +23,17 @@ comment_path = 'comment'
 if not os.path.exists(comment_path):
     os.mkdir(comment_path)
 
-agent = 'mozilla/5.0 (windowS NT 10.0; win64; x64) appLewEbkit/537.36 (KHTML, likE gecko) chrome/71.0.3578.98 safari/537.36'
-headers = {'User-Agent': agent}
+agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+headers = {
+    'User-Agent': agent,
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+    'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+    'Accept-Encoding': 'gzip, deflate',
+    'Connection': 'keep-alive',
+    'Upgrade-Insecure-Requests': '1',
+    'Referer': 'https://weibo.com/',
+    'Origin': 'https://weibo.com'
+}
 
 
 import execjs
@@ -120,8 +129,10 @@ class WeiboLogin(object):
         self.cookie_path = cookie_path
         # LWPCookieJar是python中管理cookie的工具，可以将cookie保存到文件，或者在文件中读取cookie数据到程序
         self.session.cookies = cookielib.LWPCookieJar(filename=self.cookie_path)
-        self.index_url = "http://weibo.com/login.php"
-        self.session.get(self.index_url, headers=headers, timeout=2)
+        self.index_url = "https://weibo.com/login.php"
+        # 先访问登录页面建立会话
+        login_response = self.session.get(self.index_url, headers=headers, timeout=10)
+        print(f"登录页面访问状态码: {login_response.status_code}")
         self.postdata = dict()
 
     def get_su(self):
@@ -139,15 +150,36 @@ class WeiboLogin(object):
         """与原来的相比，微博的登录从 v1.4.18 升级到了 v1.4.19
         这里使用了 URL 拼接的方式，也可以用 Params 参数传递的方式
         """
-        pre_url = "http://login.sina.com.cn/sso/prelogin.php?entry=weibo&callback=sinaSSOController.preloginCallBack&su="
+        pre_url = "https://login.sina.com.cn/sso/prelogin.php?entry=weibo&callback=sinaSSOController.preloginCallBack&su="
         pre_url = pre_url + su + "&rsakt=mod&checkpin=1&client=ssologin.js(v1.4.19)&_="
         pre_url = pre_url + str(int(time.time() * 1000))
         pre_data_res = self.session.get(pre_url, headers=headers)
-        # print("*"*50)
-        # print(pre_data_res.text)
-        # print("*" * 50)
-        sever_data = eval(pre_data_res.content.decode("utf-8").replace("sinaSSOController.preloginCallBack", ''))
-
+        
+        print("预登录响应内容:", pre_data_res.text)
+        
+        # 解析响应数据
+        response_text = pre_data_res.text
+        if response_text.startswith("sinaSSOController.preloginCallBack"):
+            # 移除回调函数名
+            json_text = response_text.replace("sinaSSOController.preloginCallBack", '').strip()
+            if json_text.startswith('(') and json_text.endswith(')'):
+                json_text = json_text[1:-1]  # 移除括号
+            
+            import json
+            sever_data = json.loads(json_text)
+        else:
+            # 如果不是预期的格式，尝试直接解析
+            import json
+            sever_data = json.loads(response_text)
+        
+        # 检查是否包含必要的字段
+        if "servertime" not in sever_data:
+            print(f"服务器返回错误: {sever_data}")
+            if sever_data.get('msg') == 'system error':
+                raise Exception("微博登录接口返回系统错误，可能是接口已更新或需要验证码")
+            else:
+                raise Exception(f"登录失败: {sever_data.get('msg', '未知错误')}")
+        
         return sever_data
 
     def get_password(self, servertime, nonce, pubkey):
@@ -221,9 +253,14 @@ class WeiboLogin(object):
             login_url = 'https://login.sina.com.cn/sso/login.php?client=ssologin.js(v1.4.19)&_'
             login_url = login_url + str(time.time() * 1000)
             login_page = self.session.post(login_url, data=self.postdata, headers=headers)
+            print("登录响应内容:", login_page.text)
             ticket_js = login_page.json()
+            if "ticket" not in ticket_js:
+                print(f"登录响应缺少ticket字段: {ticket_js}")
+                raise Exception(f"登录失败: {ticket_js.get('reason', ticket_js.get('msg', '未知错误'))}")
             ticket = ticket_js["ticket"]
         except Exception as e:
+            print(f"第一次登录尝试失败: {e}")
             sever_data = self.pre_login()
             login_url = 'https://login.sina.com.cn/sso/login.php?client=ssologin.js(v1.4.19)&_'
             login_url = login_url + str(time.time() * 1000)
@@ -231,7 +268,11 @@ class WeiboLogin(object):
             self.get_cha(pcid)
             self.postdata['door'] = input(u"请输入验证码")
             login_page = self.session.post(login_url, data=self.postdata, headers=headers)
+            print("带验证码的登录响应内容:", login_page.text)
             ticket_js = login_page.json()
+            if "ticket" not in ticket_js:
+                print(f"带验证码登录响应缺少ticket字段: {ticket_js}")
+                raise Exception(f"登录失败: {ticket_js.get('reason', ticket_js.get('msg', '未知错误'))}")
             ticket = ticket_js["ticket"]
         # 以下内容是 处理登录跳转链接
         save_pa = r'==-(\d+)-'
@@ -390,8 +431,8 @@ def start_crawl(cookie_dict, id):
         print(res.status_code)
 if __name__ == '__main__':
     global mid
-    username = "xxx"  # 用户名，一般是手机号码
-    password = "yyy"  # 密码
+    username = ""  # 用户名，一般是手机号码
+    password = ""  # 密码
     cookie_path = "Cookie.txt"  # 保存cookie 的文件名称
     # id = '4467107636950632'     # 爬取微博的 id
     mid = 'Ha2zIe2TI'

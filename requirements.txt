@@ -1,0 +1,22 @@
+# 微博评论爬虫依赖包
+# 基础网络请求库
+requests>=2.25.1
+
+# HTML解析库
+lxml>=4.6.3
+pyquery>=1.4.3
+
+# 图像处理库
+Pillow>=8.3.2
+
+# RSA加密库
+rsa>=4.7.2
+
+# JavaScript执行库
+PyExecJS>=1.5.1
+
+# 数据处理库
+pandas>=1.3.0
+
+# 其他标准库（Python内置，无需安装）
+# time, traceback, base64, binascii, re, random, urllib.parse, http.cookiejar, csv, os, datetime, threading, math
