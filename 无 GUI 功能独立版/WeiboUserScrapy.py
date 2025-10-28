@@ -26,7 +26,29 @@ from lxml import etree
 import json
 
 User_Agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0'
-Cookie = '换成你自己的 cookie, 可以参考：https://www.bilibili.com/video/BV1934y127ZM  感谢 @Simon_阿文 写的入门级食用教程：https://weibo.com/1757693565/Mswzx0UEy'
+
+# Cookie = '换成你自己的 cookie, 可以参考：https://www.bilibili.com/video/BV1934y127ZM  感谢 @Simon_阿文 写的入门级食用教程：https://weibo.com/1757693565/Mswzx0UEy'
+# 从环境变量或同目录 .env 读取 COOKIE
+def _read_cookie_from_env_file():
+    env_cookie = os.environ.get('COOKIE')
+    if env_cookie:
+        return env_cookie
+    env_path = os.path.join(os.path.dirname(__file__), '.env')
+    try:
+        with open(env_path, 'r', encoding='utf-8') as f:
+            for raw_line in f:
+                line = raw_line.strip()
+                if not line or line.startswith('#'):
+                    continue
+                if '=' in line:
+                    key, value = line.split('=', 1)
+                    if key.strip() == 'COOKIE':
+                        return value.strip().strip('"').strip("'")
+    except Exception:
+        pass
+    return ''
+
+Cookie = _read_cookie_from_env_file()
 
 
 class WeiboUserScrapy():
@@ -37,7 +59,7 @@ class WeiboUserScrapy():
         global headers
         self.headers = {
             'Cookie': Cookie,
-            'User_Agent': User_Agent
+            'User-Agent': User_Agent
         }
 
         if filter != 0 and filter != 1:
@@ -65,12 +87,16 @@ class WeiboUserScrapy():
     def deal_html(self, url):
         """处理html"""
         try:
-            html = requests.get(url, headers=self.headers, verify=False).content
-            selector = etree.HTML(html)
+            res = requests.get(url, headers=self.headers, verify=False, timeout=10)
+            if res.status_code != 200 or not res.content:
+                print(f'HTTP {res.status_code} 获取失败: {url}')
+                return None
+            selector = etree.HTML(res.content)
             return selector
         except Exception as e:
             print('Error: ', e)
             traceback.print_exc()
+            return None
 
     def deal_garbled(self, info):
         """处理乱码"""
@@ -87,6 +113,8 @@ class WeiboUserScrapy():
         try:
             url = 'https://weibo.cn/{}/info'.format(self.user_id)
             selector = self.deal_html(url)
+            if selector is None:
+                raise Exception('获取用户页面失败，可能是 Cookie 为空/过期 或 被重定向')
             nickname = selector.xpath('//title/text()')[0]
             self.nickname = nickname[:-3]
             if self.nickname == '登录 - 新' or self.nickname == '新浪':
@@ -118,6 +146,8 @@ class WeiboUserScrapy():
     def get_page_num(self, selector):
         """获取微博总页数"""
         try:
+            if selector is None:
+                return None
             if selector.xpath("//input[@name='mp']") == []:
                 page_num = 1
             else:
@@ -127,6 +157,7 @@ class WeiboUserScrapy():
         except Exception as e:
             print('Error: ', e)
             traceback.print_exc()
+            return None
 
     def get_long_weibo(self, weibo_link):
         """获取长原创微博"""
@@ -467,8 +498,14 @@ class WeiboUserScrapy():
         try:
             url = f'https://weibo.cn/{self.user_id}/profile'
             selector = self.deal_html(url)
+            if selector is None:
+                print('获取用户主页失败，请检查 COOKIE 是否正确且未过期')
+                return
             self.get_user_info(selector)  # 获取用户昵称、微博数、关注数、粉丝数
             page_num = self.get_page_num(selector)  # 获取微博总页数
+            if page_num is None:
+                print('无法获取总页数，提前结束')
+                return
             wrote_num = 0
             page1 = 0
             user_page_config = 'user_page.json'
@@ -558,8 +595,11 @@ class WeiboUserScrapy():
         try:
             print('开始抓取微博')
             self.get_weibo_info()
-            print('微博抓取完毕，开始下载相册图片')
-            self.get_weibo_img()
+            if hasattr(self, 'file_path'):
+                print('微博抓取完毕，开始下载相册图片')
+                self.get_weibo_img()
+            else:
+                print('未生成数据文件，跳过图片下载')
             print('*' * 100)
 
         except Exception as e:

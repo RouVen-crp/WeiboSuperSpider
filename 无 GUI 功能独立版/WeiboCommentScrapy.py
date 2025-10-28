@@ -27,9 +27,30 @@ import re
 from time import sleep
 from random import randint
 
+def _read_cookie_from_env_file():
+    env_cookie = os.environ.get('COOKIE')
+    if env_cookie:
+        return env_cookie
+    env_path = os.path.join(os.path.dirname(__file__), '.env')
+    try:
+        with open(env_path, 'r', encoding='utf-8') as f:
+            for raw_line in f:
+                line = raw_line.strip()
+                if not line or line.startswith('#'):
+                    continue
+                if '=' in line:
+                    key, value = line.split('=', 1)
+                    if key.strip() == 'COOKIE':
+                        return value.strip().strip('"').strip("'")
+    except Exception:
+        pass
+    return ''
+
+Cookie = _read_cookie_from_env_file()
+
 headers = {
     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36',
-    'Cookie': '''换成你自己的 cookie'''
+    'Cookie': Cookie
 }
 
 class WeiboCommentScrapy(Thread):

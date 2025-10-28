@@ -29,7 +29,27 @@ import os
 from datetime import datetime, timedelta
 import sys
 
-Cookie = '改成你自己的 Cookie'
+# Cookie = '换成你自己的 cookie, 可以参考：https://www.bilibili.com/video/BV1934y127ZM  感谢 @Simon_阿文 写的入门级食用教程：https://weibo.com/1757693565/Mswzx0UEy'
+def _read_cookie_from_env_file():
+    env_cookie = os.environ.get('COOKIE')
+    if env_cookie:
+        return env_cookie
+    env_path = os.path.join(os.path.dirname(__file__), '.env')
+    try:
+        with open(env_path, 'r', encoding='utf-8') as f:
+            for raw_line in f:
+                line = raw_line.strip()
+                if not line or line.startswith('#'):
+                    continue
+                if '=' in line:
+                    key, value = line.split('=', 1)
+                    if key.strip() == 'COOKIE':
+                        return value.strip().strip('"').strip("'")
+    except Exception:
+        pass
+    return ''
+
+Cookie = _read_cookie_from_env_file()
 
 User_Agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0'
 
@@ -499,7 +519,7 @@ if __name__ == '__main__':
     # 程序是从 end_time 到 start_time 这样爬
     # end_time + 1 day + 8 hour
     # start_time + 8hour
-    start_time, end_time = '2020-10-31-04', '2020-10-31-05'
+    start_time, end_time = '2020-10-31-04', '2020-10-31-08'
     if start_time >= end_time:
         raise Exception('start_time 是离现在更远的那个时间，必须小于 end_time')
     WeiboTopicScrapy(keyword=keyword, filter=1, start_time=start_time, end_time=end_time)

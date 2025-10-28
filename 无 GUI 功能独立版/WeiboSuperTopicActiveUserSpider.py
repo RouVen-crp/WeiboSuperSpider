@@ -20,6 +20,26 @@ from urllib.parse import parse_qs
 
 from time import sleep
 
+def _read_cookie_from_env_file():
+    env_cookie = os.environ.get('COOKIE')
+    if env_cookie:
+        return env_cookie
+    env_path = os.path.join(os.path.dirname(__file__), '.env')
+    try:
+        with open(env_path, 'r', encoding='utf-8') as f:
+            for raw_line in f:
+                line = raw_line.strip()
+                if not line or line.startswith('#'):
+                    continue
+                if '=' in line:
+                    key, value = line.split('=', 1)
+                    if key.strip() == 'COOKIE':
+                        return value.strip().strip('"').strip("'")
+    except Exception:
+        pass
+    return ''
+
+
 
 class WeiboSuperTopicActiveUserSpider():
     headers = {
@@ -160,8 +180,10 @@ if __name__ == '__main__':
     # 必须是登录了新版 weibo.com，然后打开超话主页的相册 tab 例如
     # https://weibo.com/p/10080868ed174b2d302045692b38756ee47f21/topic_album?from=page_100808&mod=TAB#place
     # 下拉，复制 /p/aj/proxy 接口的 cookie
+    Cookie = _read_cookie_from_env_file()
     WeiboSuperTopicActiveUserSpider(
-        super_topic_id='在此处替换 super_topic_id 例如： 10080868ed174b2d302045692b38756ee47f21',
-        cookie='在此处替换 cookie'
+        # super_topic_id='在此处替换 super_topic_id 例如： 10080868ed174b2d302045692b38756ee47f21',
+        super_topic_id='1008088fd92f4f79feef9d97ff90d2ff2f3127',
+        cookie=Cookie
 
     ).run()

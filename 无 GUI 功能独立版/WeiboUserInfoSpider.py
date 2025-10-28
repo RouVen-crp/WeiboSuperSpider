@@ -12,6 +12,30 @@ import pandas as pd
 from time import sleep
 
 import json
+import os
+
+# Cookie = '换成你自己的 cookie, 可以参考：https://www.bilibili.com/video/BV1934y127ZM  感谢 @Simon_阿文 写的入门级食用教程：https://weibo.com/1757693565/Mswzx0UEy'
+
+def _read_cookie_from_env_file():
+    env_cookie = os.environ.get('COOKIE')
+    if env_cookie:
+        return env_cookie
+    env_path = os.path.join(os.path.dirname(__file__), '.env')
+    try:
+        with open(env_path, 'r', encoding='utf-8') as f:
+            for raw_line in f:
+                line = raw_line.strip()
+                if not line or line.startswith('#'):
+                    continue
+                if '=' in line:
+                    key, value = line.split('=', 1)
+                    if key.strip() == 'COOKIE':
+                        return value.strip().strip('"').strip("'")
+    except Exception:
+        pass
+    return ''
+
+_COOKIE = _read_cookie_from_env_file()
 
 headers = {
     'authority': 'weibo.com',
@@ -25,8 +49,9 @@ headers = {
     'sec-fetch-dest': 'empty',
     'referer': 'https://weibo.com/1192329374/KnnG78Yf3?filter=hot&root_comment_id=0&type=comment',
     'accept-language': 'zh-CN,zh;q=0.9,en-CN;q=0.8,en;q=0.7,es-MX;q=0.6,es;q=0.5',
-    'cookie': '介里，患曲奇'
+    'cookie': _COOKIE
 }
+
 
 
 def parseUid(uid):
@@ -144,5 +169,5 @@ if __name__ == '__main__':
     user_info = getUserInfo(uid='xiena')
     print(user_info)
 
-    dfAddUserInfo(file_path='KnnG78Yf3.csv', user_col='comment_user_link')
-    dfGetUserInfo(file_path='KnnG78Yf3.csv', user_info_col='user_info')
+    dfAddUserInfo(file_path='./user/6859133019_月小水长.csv', user_col='comment_user_link')
+    dfGetUserInfo(file_path='./user/6859133019_月小水长.csv', user_info_col='user_info')
