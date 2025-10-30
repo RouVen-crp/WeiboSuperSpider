@@ -1,0 +1,91 @@
+{
+  "weibo_content": {
+    "wid": "QbelLys5Z",
+    "weibo_id": "",
+    "user_id": null,
+    "user_name": "",
+    "content": "今天夜间多云转阴，有轻雾或雾，东部地区有零星小雨，南转北风一二级，最低气温6℃；明天早晨有轻雾或雾，白天阴天间多云，北转南风二三级，最高气温16℃。今天夜间能见度明显转差，东部地区有弱降水，出行注意安全。市气象台28日17时发布#天气预报#",
+    "images": [],
+    "image_count": 0,
+    "publish_time": "2025-10-28 17:00",
+    "publish_source": "",
+    "like_count": 0,
+    "repost_count": 0,
+    "comment_count": 0,
+    "weibo_url": "https://weibo.cn/comment/QbelLys5Z"
+  },
+  "comments": [],
+  "reposts": [
+    {
+      "user_id": "3837272140",
+      "user_name": "李茂盛中医师",
+      "content": "#天气与健康# 10月28日 20:08 来自nova 11 SE",
+      "like_count": 0,
+      "publish_time": "2025-10-28 20:08"
+    },
+    {
+      "user_id": "5695608993",
+      "user_name": "鬼疡",
+      "content": "转发文本在此 10月28日 18:59 来自微博手机版",
+      "like_count": 0,
+      "publish_time": "2025-10-28 18:59"
+    },
+    {
+      "user_id": "2302075733",
+      "user_name": "RussiaRen2025",
+      "content": "转发微博 10月28日 17:30 来自vivo S20",
+      "like_count": 0,
+      "publish_time": "2025-10-28 17:30"
+    },
+    {
+      "user_id": "5780949476",
+      "user_name": "顺义文旅",
+      "content": "转发微博 10月28日 17:02 来自微博网页版",
+      "like_count": 0,
+      "publish_time": "2025-10-28 17:02"
+    }
+  ],
+  "stats": {
+    "weibo_info": {
+      "wid": "QbelLys5Z",
+      "user_name": "",
+      "publish_time": "2025-10-28 17:00",
+      "content_length": 120,
+      "image_count": 0
+    },
+    "interaction_stats": {
+      "like_count": 0,
+      "repost_count": 4,
+      "comment_count": 0,
+      "total_interactions": 4
+    },
+    "comment_stats": {
+      "total_comments": 0,
+      "top_commenters": [],
+      "avg_comment_length": 0
+    },
+    "repost_stats": {
+      "total_reposts": 4,
+      "top_reposters": [
+        {
+          "name": "李茂盛中医师",
+          "count": 1
+        },
+        {
+          "name": "鬼疡",
+          "count": 1
+        },
+        {
+          "name": "RussiaRen2025",
+          "count": 1
+        },
+        {
+          "name": "顺义文旅",
+          "count": 1
+        }
+      ],
+      "avg_repost_length": 28.25
+    }
+  },
+  "export_time": "2025-10-29 19:24:09"
+}
