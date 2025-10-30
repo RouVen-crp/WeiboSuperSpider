@@ -1,0 +1,181 @@
+{
+  "weibo_content": {
+    "wid": "QbelLys5Z",
+    "weibo_id": "",
+    "user_id": null,
+    "user_name": "",
+    "content": "今天夜间多云转阴，有轻雾或雾，东部地区有零星小雨，南转北风一二级，最低气温6℃；明天早晨有轻雾或雾，白天阴天间多云，北转南风二三级，最高气温16℃。今天夜间能见度明显转差，东部地区有弱降水，出行注意安全。市气象台28日17时发布#天气预报#",
+    "images": [],
+    "image_count": 0,
+    "publish_time": "2025-10-28 17:00",
+    "publish_source": "",
+    "like_count": 0,
+    "repost_count": 0,
+    "comment_count": 0,
+    "weibo_url": "https://weibo.cn/comment/QbelLys5Z"
+  },
+  "comments": [
+    {
+      "comment_id": "5226821823500134",
+      "commenter_id": "2882046215",
+      "commenter_name": "巴璐的微博",
+      "content": "哦",
+      "like_count": 0,
+      "publish_time": "2025-10-28 20:34",
+      "publish_source": ""
+    },
+    {
+      "comment_id": "5226814484253395",
+      "commenter_id": "2783895822",
+      "commenter_name": "冬天的秘密沙洲冷",
+      "content": "夏天就是湿度大潮湿闷热不舒服",
+      "like_count": 0,
+      "publish_time": "2025-10-28 20:05",
+      "publish_source": ""
+    },
+    {
+      "comment_id": "5226811629767994",
+      "commenter_id": "2882046215",
+      "commenter_name": "巴璐的微博",
+      "content": "哟",
+      "like_count": 0,
+      "publish_time": "2025-10-28 19:54",
+      "publish_source": ""
+    },
+    {
+      "comment_id": "5226808981064734",
+      "commenter_id": "2783895822",
+      "commenter_name": "冬天的秘密沙洲冷",
+      "content": "是的，雾霾混合",
+      "like_count": 0,
+      "publish_time": "2025-10-28 19:43",
+      "publish_source": ""
+    },
+    {
+      "comment_id": "5226808900326871",
+      "commenter_id": "2783895822",
+      "commenter_name": "冬天的秘密沙洲冷",
+      "content": "湿度65%，显得阴冷",
+      "like_count": 0,
+      "publish_time": "2025-10-28 19:43",
+      "publish_source": ""
+    },
+    {
+      "comment_id": "5226783156737012",
+      "commenter_id": "5863842780",
+      "commenter_name": "北京不冷东京hot",
+      "content": "明天能见度估计也差吧",
+      "like_count": 0,
+      "publish_time": "2025-10-28 18:01",
+      "publish_source": ""
+    },
+    {
+      "comment_id": "5226778920750496",
+      "commenter_id": "2882046215",
+      "commenter_name": "巴璐的微博",
+      "content": "明天没有太阳，温度还挺高的呢。",
+      "like_count": 0,
+      "publish_time": "2025-10-28 17:44",
+      "publish_source": ""
+    },
+    {
+      "comment_id": "5226767780679723",
+      "commenter_id": "6722009241",
+      "commenter_name": "嘟嘟092319",
+      "content": "下午好",
+      "like_count": 0,
+      "publish_time": "2025-10-28 17:00",
+      "publish_source": ""
+    }
+  ],
+  "reposts": [
+    {
+      "user_id": "3837272140",
+      "user_name": "李茂盛中医师",
+      "content": "#天气与健康# 10月28日 20:08 来自nova 11 SE",
+      "like_count": 0,
+      "publish_time": "2025-10-28 20:08"
+    },
+    {
+      "user_id": "5695608993",
+      "user_name": "鬼疡",
+      "content": "转发文本在此 10月28日 18:59 来自微博手机版",
+      "like_count": 0,
+      "publish_time": "2025-10-28 18:59"
+    },
+    {
+      "user_id": "2302075733",
+      "user_name": "RussiaRen2025",
+      "content": "转发微博 10月28日 17:30 来自vivo S20",
+      "like_count": 0,
+      "publish_time": "2025-10-28 17:30"
+    },
+    {
+      "user_id": "5780949476",
+      "user_name": "顺义文旅",
+      "content": "转发微博 10月28日 17:02 来自微博网页版",
+      "like_count": 0,
+      "publish_time": "2025-10-28 17:02"
+    }
+  ],
+  "stats": {
+    "weibo_info": {
+      "wid": "QbelLys5Z",
+      "user_name": "",
+      "publish_time": "2025-10-28 17:00",
+      "content_length": 120,
+      "image_count": 0
+    },
+    "interaction_stats": {
+      "like_count": 0,
+      "repost_count": 4,
+      "comment_count": 8,
+      "total_interactions": 12
+    },
+    "comment_stats": {
+      "total_comments": 8,
+      "top_commenters": [
+        {
+          "name": "巴璐的微博",
+          "count": 3
+        },
+        {
+          "name": "冬天的秘密沙洲冷",
+          "count": 3
+        },
+        {
+          "name": "北京不冷东京hot",
+          "count": 1
+        },
+        {
+          "name": "嘟嘟092319",
+          "count": 1
+        }
+      ],
+      "avg_comment_length": 7.625
+    },
+    "repost_stats": {
+      "total_reposts": 4,
+      "top_reposters": [
+        {
+          "name": "李茂盛中医师",
+          "count": 1
+        },
+        {
+          "name": "鬼疡",
+          "count": 1
+        },
+        {
+          "name": "RussiaRen2025",
+          "count": 1
+        },
+        {
+          "name": "顺义文旅",
+          "count": 1
+        }
+      ],
+      "avg_repost_length": 28.25
+    }
+  },
+  "export_time": "2025-10-30 11:46:22"
+}
