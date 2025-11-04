@@ -1,22 +1,22 @@
-# Î¢²©ÆÀÂÛÅÀ³æÒÀÀµ°ü
-# »ù´¡ÍøÂçÇëÇó¿â
+# ÃÂ¢Â²Â©Ã†Ã€Ã‚Ã›Ã…Ã€Â³Ã¦Ã’Ã€Ã€ÂµÂ°Ã¼
+# Â»Ã¹Â´Â¡ÃÃ¸Ã‚Ã§Ã‡Ã«Ã‡Ã³Â¿Ã¢
 requests>=2.25.1
 
-# HTML½âÎö¿â
+# HTMLÂ½Ã¢ÃÃ¶Â¿Ã¢
 lxml>=4.6.3
 pyquery>=1.4.3
 
-# Í¼Ïñ´¦Àí¿â
+# ÃÂ¼ÃÃ±Â´Â¦Ã€Ã­Â¿Ã¢
 Pillow>=8.3.2
 
-# RSA¼ÓÃÜ¿â
+# RSAÂ¼Ã“ÃƒÃœÂ¿Ã¢
 rsa>=4.7.2
 
-# JavaScriptÖ´ĞĞ¿â
+# JavaScriptÃ–Â´ÃÃÂ¿Ã¢
 PyExecJS>=1.5.1
 
-# Êı¾İ´¦Àí¿â
+# ÃŠÃ½Â¾ÃÂ´Â¦Ã€Ã­Â¿Ã¢
 pandas>=1.3.0
 
-# ÆäËû±ê×¼¿â£¨PythonÄÚÖÃ£¬ÎŞĞè°²×°£©
+# Ã†Ã¤Ã‹Ã»Â±ÃªÃ—Â¼Â¿Ã¢Â£Â¨PythonÃ„ÃšÃ–ÃƒÂ£Â¬ÃÃÃÃ¨Â°Â²Ã—Â°Â£Â©
 # time, traceback, base64, binascii, re, random, urllib.parse, http.cookiejar, csv, os, datetime, threading, math
